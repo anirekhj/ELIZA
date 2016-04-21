@@ -1,6 +1,5 @@
-# ELIZA&#x231a;
+# ELIZA (ɪɴ ᴘʀᴏɢʀᴇss)
 A basic pattern recognition program based on Joseph Weizenbaum's chatterbot.  
 **Written in Racket (formerly PLT Scheme).**  
 Uses a list of symbols as medium of interaction to avoid dealing with the complexities of parsing string.  
-Every input is treated in isolation.    
-**ɪɴ ᴘʀᴏɢʀᴇss**
+Every input is treated in isolation.
