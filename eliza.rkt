@@ -26,3 +26,6 @@
                [(= (second p) (second s)) (match-quest (rest (rest p)) (rest (rest s)))]
                [else false])]
         [else false]))
+        
+(define (extract-quest p t))
+        
