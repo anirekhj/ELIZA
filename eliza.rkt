@@ -41,6 +41,7 @@
           [else false])))
 
 ;(check-epect (match-quest '(CS ? is not fun at ?) '(CS 135 is not fun at all)) true)
+;(check-expect (match-quest '(CS ? is absolutely ?) '(CS ? isn't absolutely ?)) false)
 
 (define (extract-quest pwa t)
   (cond [(empty? pwa) empty]
