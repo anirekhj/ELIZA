@@ -18,14 +18,36 @@
 (check-expect (same? '(a bf ace) '(a bf ace)) true)
 (check-expect (same? '(a bf ace) '(ae cq sdv ve)) false)
 
-(define (match-quest p s)
-  (cond [(symbol=? (first p) (first s))
-         (match-quest (rest p) (rest s))]
-        [(symbol=? (first p) '?)
-         (cond [(empty? (or (second p) (second s))) true]
-               [(= (second p) (second s)) (match-quest (rest (rest p)) (rest (rest s)))]
-               [else false])]
-        [else false]))
-        
-(define (extract-quest p t))
+(define (match-quest p t)
+  (local [(define (might-containq? p)
+            (cond [(empty? p) true]
+                  [(symbol=? '* (first p)) false]
+                  [else (might-containq? (rest p))]))
+          (define (initial p t)
+            (cond [(and (empty? p) (empty? t)) true]
+                  [(= (length p) (length t)) (compare p t)]
+                  [else false]))
+          (define (compare p t)
+            (cond [(equal? (first t) (first p))
+                   (initial (rest p) (rest t))]
+                  [(symbol=? (first p) '?) (loop p t)]))
+          (define (loop p t)
+            (cond [(empty? (rest t)) true]
+                  [(equal? (second t) (second p))
+                   (initial (rest (rest p)) (rest (rest t)))]
+                  [(symbol=? (second p) '?) (loop (rest p) (rest t))]
+                  [else false]))]
+    (cond [(might-containq? p) (initial p t)]
+          [else false])))
+
+;(check-epect (match-quest '(CS ? is not fun at ?) '(CS 135 is not fun at all)) true)
+
+(define (extract-quest pwa t)
+  (cond [(empty? pwa) empty]
+        [(symbol=? '? (first pwa))
+         (cons (list (first t)) (extract-quest (rest pwa) (rest t)))]
+        [else (extract-quest (rest pwa) (rest t))]))
+
+;(check-expect (extract-quest '(CS ? is ? fun) '(CS 135 is really fun))
+;             '((135) (really)))
         
