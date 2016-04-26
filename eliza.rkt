@@ -65,3 +65,24 @@
 ;(check-expect (extract-quest '(CS ? is ? fun) '(CS 135 is really fun))
 ;             '((135) (really)))
         
+        
+;; The following function is still being tested
+(define (match-star p t)
+  (local [(define (might-containa? p)
+            (cond [(empty? p) true]
+                  [(symbol=? '? (first p)) false]
+                  [else (might-containa? (rest p))]))
+          (define (initial p t)
+            (cond [(and (empty? p) (empty? t)) true]
+                  [(<= (length p) (length t)) (compare p t)]
+                  [else false]))
+          (define (compare p t)
+            (cond [(equal? (first t) (first p))
+                   (initial (rest p) (rest t))]
+                  [(symbol=? (first p) '*) (loop p t)]))
+          (define (loop p t)
+            (cond [(empty? (rest t)) true]
+                  [(equal? (second t) (second p))
+                   (initial (rest (rest p)) (rest (rest t)))]
+                  [(symbol=? (second p) '?) (loop (rest p) (rest t))]
+                  [else false]))]
