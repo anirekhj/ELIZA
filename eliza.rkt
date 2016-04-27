@@ -76,7 +76,7 @@
             (cond [(and (empty? p) (empty? t)) true]
                   [(<= (length p) (length t)) (compare p t)]
                   [else false]))
-          (define (compare p t)
+         #| (define (compare p t)
             (cond [(equal? (first t) (first p))
                    (initial (rest p) (rest t))]
                   [(symbol=? (first p) '*) (loop p t)]))
@@ -85,4 +85,4 @@
                   [(equal? (second t) (second p))
                    (initial (rest (rest p)) (rest (rest t)))]
                   [(symbol=? (second p) '?) (loop (rest p) (rest t))]
-                  [else false]))]
+                  [else false]))] #|
