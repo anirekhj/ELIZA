@@ -93,3 +93,17 @@
           [else false])))
 
 (match-star '(CS 135) '(CS 135 is no no fun at all))
+
+;; Function is still being developed
+(define (extract-star pwq t)
+  (local [(define (initial pwq t)
+            (cond [(empty? pwq) t]
+                  [(equal? (first pwq) (first t)) (list empty)]
+                  [else (extract pwq t)]))
+          (define (extract pwq t)
+            (cond [(equal? (first pwq) (first t)) empty]
+                  [else (cons (first t) (extract pwq (rest t)))]))]
+  (cond [(empty? pwq) empty]
+        [(equal? '* (first pwq))
+         (initial (rest pwq) t)]
+        [else (extract-star (rest pwq) (rest t))])))
