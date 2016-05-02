@@ -99,10 +99,7 @@
   (local [(define (initial pwq t)
             (cond [(empty? pwq) t]
                   [(equal? (first pwq) (first t)) (list empty)]
-                  [else (extract pwq t)]))
-          (define (extract pwq t)
-            (cond [(equal? (first pwq) (first t)) empty]
-                  [else (cons (first t) (extract pwq (rest t)))]))]
+                  [else (extract pwq t)]))]
   (cond [(empty? pwq) empty]
         [(equal? '* (first pwq))
          (initial (rest pwq) t)]
