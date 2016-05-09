@@ -92,7 +92,7 @@
           [(not (= (length p) (length t))) false]
           [else false])))
 
-(match-star '(CS 135) '(CS 135 is no no fun at all))
+;; (match-star '(CS 135) '(CS 135 is no no fun at all))
 
 ;; Function is still being developed
 (define (extract-star pwq t)
